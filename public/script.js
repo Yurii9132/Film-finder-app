@@ -4,14 +4,13 @@ const playBtn = document.getElementById('playBtn');
 
 const getGenres = async () => {
     const genreRequestEndpoint = '/genre/movie/list';
-    const requestParams = `?include_adult=true&language=en&api_key=${tmdbKey}`;
+    const requestParams = `?language=en&api_key=${tmdbKey}`;
     const urlToFetch = `${tmdbBaseUrl}${genreRequestEndpoint}${requestParams}`;
     try {
         const respons = await fetch(urlToFetch);
         if(respons.ok) {
             const jsonResponse = await respons.json();
             const genres = jsonResponse.genres;
-            // Object.values(genres).flat().forEach(genre => { console.log(genre); });
             return genres;
           }
     } catch (error) {
@@ -21,17 +20,17 @@ const getGenres = async () => {
 
 const getMovies = async () => {
     const selectedGenre = getSelectedGenre();
-    const popular = '&sort_by=popularity.desc'
+    const randPage = Math.floor(Math.random() * 500) + 1;
     const discoverMovieEndpoint = '/discover/movie';
-    const requestParams = `?api_key=${tmdbKey}&with_genres=${selectedGenre}${popular}`;
+    const requestParams = `?api_key=${tmdbKey}&with_genres=${selectedGenre}`;
     const urlToFetch = `${tmdbBaseUrl}${discoverMovieEndpoint}${requestParams}`;
     try {
-        const response = await fetch(urlToFetch);
-        if(response.ok) {
-            const jsonResponse = await response.json();
-            const movies = jsonResponse.results;
-            return movies;
-        }
+      const response = await fetch(`${urlToFetch}&page=${randPage}`);
+      if(response.ok) {
+        const jsonResponse = await response.json();
+          const movies = jsonResponse.results;
+          return movies;
+      }
     } catch (error) {
         console.log(error);
     }

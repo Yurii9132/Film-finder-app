@@ -88,11 +88,13 @@ const displayMovie = (movieInfo) => {
     // Create HTML content containing movie info
     const moviePoster = createMoviePoster(movieInfo.poster_path);
     const titleHeader = createMovieTitle(movieInfo.title);
+    const releaseDate = createMovieTitle(movieInfo.release_date);
     const overviewText = createMovieOverview(movieInfo.overview);
   
     // Append title, poster, and overview to page
     moviePosterDiv.appendChild(moviePoster);
     movieTextDiv.appendChild(titleHeader);
+    movieTextDiv.appendChild(releaseDate);
     movieTextDiv.appendChild(overviewText);
   
     showBtns();
